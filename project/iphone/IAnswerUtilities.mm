@@ -1,11 +1,3 @@
-//
-//  IAnswerUtilities.m
-//  iAnswer
-//
-//  Created by Di Wang on 11-06-17.
-//  Copyright 2011 University of Waterloo. All rights reserved.
-//
-
 #import "IAnswerUtilities.h"
 
 
