@@ -1,0 +1,1 @@
+An iOS microphone implementation for haXe NME. There are still many features missing and it is not entirely stable. Use at your own risk. Only one output format is supported with this. Speex encoding with a pre-pended length field. Feel free to fork and continue work on this -- I will likely not be continuing development.
