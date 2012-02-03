@@ -1,0 +1,107 @@
+<xml>
+	
+	<set name="GCC_THIN_ARCHIVE" value="1" if="iphone"/>
+	
+	<include name="${HXCPP}/build-tool/BuildCommon.xml"/>
+	
+	<set name="mobile" value="1" if="iphone"/>
+	<set name="mobile" value="1" if="android"/>
+	<set name="mobile" value="1" if="webos"/>
+	
+	<set name="SLIBEXT" value=".lib" if="windows"/>
+	<set name="SLIBEXT" value=".a" unless="windows"/>
+	<set name="SLIBEXT" value=".so" if="webos"/>
+	
+	<files id="iphone">
+		<compilerflag value="-Iinclude"/>
+		<file name="iphone/Recorder.mm"/>
+		<file name="iphone/AQRecorder.mm"/>
+		<file name="iphone/SpeexEncoder.mm"/>
+		<file name="iphone/CAStreamBasicDescription.cpp"/>
+		<file name="iphone/CAXException.cpp"/>
+		<file name="iphone/CADebugMacros.cpp"/>
+		<file name="iphone/IAnswerUtilities.mm"/>
+	</files>
+	
+	<files id="common">
+		<compilerflag value="-Iinclude"/>
+		<compilerflag value="-DFIXED_POINT"/>
+		<compilerflag value="-DUSE_KISS_FFT"/>
+		<compilerflag value="-UHAVE_CONFIG_H"/>
+		<compilerflag value="-Dinline=__inline"/>
+		<compilerflag value="-DEXPORT="/>
+		<compilerflag value="-D_USE_MATH_DEFINES"/>
+		<file name="libspeex/bits.c"/>
+		<file name="libspeex/buffer.c"/>
+		<file name="libspeex/cb_search.c"/>
+		<file name="libspeex/exc_10_16_table.c"/>
+		<file name="libspeex/exc_10_32_table.c"/>
+		<file name="libspeex/exc_20_32_table.c"/>
+		<file name="libspeex/exc_5_256_table.c"/>
+		<file name="libspeex/exc_5_64_table.c"/>
+		<file name="libspeex/exc_8_128_table.c"/>
+		<file name="libspeex/fftwrap.c"/>
+		<file name="libspeex/filterbank.c"/>
+		<file name="libspeex/filters.c"/>
+		<file name="libspeex/gain_table.c"/>
+		<file name="libspeex/gain_table_lbr.c"/>
+		<file name="libspeex/hexc_10_32_table.c"/>
+		<file name="libspeex/hexc_table.c"/>
+		<file name="libspeex/high_lsp_tables.c"/>
+		<file name="libspeex/jitter.c"/>
+		<file name="libspeex/kiss_fft.c"/>
+		<file name="libspeex/kiss_fftr.c"/>
+		<file name="libspeex/lpc.c"/>
+		<file name="libspeex/lsp.c"/>
+		<file name="libspeex/lsp_tables_nb.c"/>
+		<file name="libspeex/ltp.c"/>
+		<file name="libspeex/mdf.c"/>
+		<file name="libspeex/modes.c"/>
+		<file name="libspeex/modes_wb.c"/>
+		<file name="libspeex/nb_celp.c"/>
+		<file name="libspeex/preprocess.c"/>
+		<file name="libspeex/quant_lsp.c"/>
+		<file name="libspeex/resample.c"/>
+		<file name="libspeex/sb_celp.c"/>
+		<file name="libspeex/scal.c"/>
+		<file name="libspeex/smallft.c"/>
+		<file name="libspeex/speex.c"/>
+		<file name="libspeex/speex_callbacks.c"/>
+		<file name="libspeex/speex_header.c"/>
+		<file name="libspeex/stereo.c"/>
+		<file name="libspeex/vbr.c"/>
+		<file name="libspeex/vq.c"/>
+		<file name="libspeex/window.c"/>
+		<file name="common/ExternalInterface.cpp"/>
+	</files>
+	
+	<set name="tool" value="exe" unless="iphone"/>
+	<set name="tool" value="static" if="iphone"/>
+	
+	<set name="ndll-tool" value="dll" unless="iphone"/>
+	<set name="ndll-tool" value="static" if="iphone"/>
+	<set name="name_extra" value=".iphoneos" if="iphoneos"/>
+	<set name="name_extra" value=".iphonesim" if="iphonesim"/>
+
+	<set name="no_thirdparty_extras" value="1" if="iphone"/>
+	
+	<set name="sdl_static" value="1" unless="mobile"/>
+	<unset name="sdl_static" if="dynamic_sdl"/>
+	<set name="no_thirdparty_extras" value="1" if="dynamic_sdl"/>
+	
+	<set name="name_prefix" value="lib" if="iphone" />
+	
+	<target id="NDLL" output="${name_prefix}microphone${name_extra}" tool="linker" toolid="${ndll-tool}">
+		<outdir name="ndll/${BINDIR}" />
+		<ext value=".ndll" unless="mobile"/>
+		
+		<files id="common"/>
+		
+		<files id="iphone" if="iphone"/>
+	</target>
+
+	<target id="default">
+	   <target id="NDLL"/>
+	</target>
+	
+</xml>
